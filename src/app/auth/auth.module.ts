@@ -13,7 +13,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forChild(appRoutes)
   ],
   declarations: [LoginComponent]
 })
