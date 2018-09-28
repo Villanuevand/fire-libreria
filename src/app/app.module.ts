@@ -10,6 +10,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 // import { AngularFireStorageModule } from '@angular/fire/storage';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
+import { AbmComponent } from './abm/abm.component';
 
 const FIREBASE_IMPORTS = [
   AngularFireModule.initializeApp(environment.firebase, 'fire-libreria'),
@@ -18,7 +19,8 @@ const FIREBASE_IMPORTS = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AbmComponent
   ],
   imports: [
     BrowserModule,
