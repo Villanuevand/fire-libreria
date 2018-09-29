@@ -3,11 +3,14 @@
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Fire-Libreria 🔥📚</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Cerrar sesión</a>
+      <a class="nav-link" (click)="logout()" *ngIf="afAuth.user | async as user;">Cerrar sesión</a>
     </li>
+      <li class="nav-item text-nowrap">
+          <a class="nav-link" (click)="login()">Login</a>
+      </li>
   </ul>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="afAuth.user | async as user">
   <div class="row">
     <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="height:calc(100vh)">
       <div class="sidebar-sticky">
