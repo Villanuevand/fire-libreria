@@ -1,0 +1,18 @@
+<table  class="table">
+    <thead>
+    <tr>
+        <th scope="col">No</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Precio</th>
+    </tr>
+    </thead>
+    <tr *ngFor="let book of books | async">
+        <th scope="col">{{book.numero}}</th>
+        <th scope="col">{{book.titulo}}</th>
+        <th scope="col">{{book.fecha}}</th>
+        <th scope="col">{{book.cantidad}}</th>
+        <th scope="col">{{book.precio}}</th>
+    </tr>
+</table>
