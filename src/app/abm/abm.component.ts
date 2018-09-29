@@ -23,7 +23,7 @@ export class AbmComponent implements OnInit {
       this.books = this.db.collection('book').snapshotChanges().pipe(
           map((collection) => {
               const data: any = collection;
-              let _data = [];
+              const _data = [];
               data.forEach(d => {
                   const _d = d.payload.doc.data();
                   const id = d.payload.doc.id;

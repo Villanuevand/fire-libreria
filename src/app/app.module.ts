@@ -12,6 +12,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { AbmComponent } from './abm/abm.component';
 import {FormsModule} from '@angular/forms';
+import { ListadoComponent } from './listado/listado.component';
 
 const FIREBASE_IMPORTS = [
   AngularFireModule.initializeApp(environment.firebase, 'fire-libreria'),
@@ -21,7 +22,8 @@ const FIREBASE_IMPORTS = [
 @NgModule({
   declarations: [
     AppComponent,
-    AbmComponent
+    AbmComponent,
+    ListadoComponent
   ],
   imports: [
     BrowserModule,
