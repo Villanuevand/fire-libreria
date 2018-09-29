@@ -1,3 +1,4 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarModal" >Agregar Libro</button>
 <table  class="table">
   <thead>
     <tr>
@@ -6,21 +7,78 @@
       <th scope="col">Fecha</th>
       <th scope="col">Cantidad</th>
       <th scope="col">Precio</th>
+      <th scope="col">Imagen</th>
       <th scope="col">Acciones</th>
     </tr>
   </thead>
-  <tr>
-    <th scope="col">1</th>
-    <th scope="col">Harry Potter y la piedra filosofal</th>
-    <th scope="col">Junio 1997</th>
-    <th scope="col">20</th>
-    <th scope="col">500</th>
+  <tr *ngFor="let book of books | async">
+    <th scope="col">{{book.numero}}</th>
+    <th scope="col">{{book.titulo}}</th>
+    <th scope="col">{{book.fecha}}</th>
+    <th scope="col">{{book.cantidad}}</th>
+    <th scope="col">{{book.precio}}</th>
+      <th scope="col">
+          <img class="list-img" [src]="book.urlImg" alt="">
+      </th>
     <th scope="col">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" >Editar</button>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"  >Eliminar</button>
+      <button (click)="bookSelected = book" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" >Editar</button>
+      <button (click)="bookSelected = book" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"  >Eliminar</button>
     </th>
   </tr>
 </table>
+
+<!-- agregar Modal -->
+<div class="modal fade" id="agregarModal" tabindex="-1" role="dialog" aria-labelledby="agregarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarModalLabel">Agregar libro</h5>
+                <button type="button" class="close" id="closeAgregar" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="_numero">Numero</label>
+                    <input [(ngModel)]="numero" type="text" class="form-control" id="_numero" aria-describedby="_numeroHelper" placeholder="Numero">
+                    <small id="_numeroHelper" class="form-text text-muted">Numero.</small>
+                </div>
+                <div class="form-group">
+                    <label for="_titulo">Titulo</label>
+                    <input [(ngModel)]="titulo" type="text" class="form-control" id="_titulo" aria-describedby="_tituloHelper" placeholder="Ingresar titulo">
+                    <small id="_tituloHelper" class="form-text text-muted">Titulo del libro.</small>
+                </div>
+                <div class="form-group">
+                    <label for="_titulo">Fecha</label>
+                    <input [(ngModel)]="fecha" type="text" class="form-control" id="_fecha" aria-describedby="_fechaHelper" placeholder="Ingresar la fecha">
+                    <small id="_fechaHelper" class="form-text text-muted">Fecha de salida.</small>
+                </div>
+                <div class="form-group">
+                    <label for="_titulo">Cantidad</label>
+                    <input [(ngModel)]="cantidad" type="text" class="form-control" id="_cantidad" aria-describedby="_cantidadHelper" placeholder="Ingresar el stock">
+                    <small id="_cantidadHelper" class="form-text text-muted">Stock.</small>
+                </div>
+                <div class="form-group">
+                    <label for="_titulo">Precio</label>
+                    <input [(ngModel)]="precio" type="text" class="form-control" id="_precio" aria-describedby="_precioHelper" placeholder="Ingresar el precio">
+                    <small id="_precioHelper" class="form-text text-muted">Precio del libro.</small>
+                </div>
+                <div class="form-group">
+                    <input type="file" (change)="uploadFile($event)" />
+                    <div *ngIf="uploadPercent && (uploadPercent | async) !== 100">{{ uploadPercent | async }} %</div>
+                    <div class="progress" *ngIf="uploadPercent && (uploadPercent | async) !== 100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                    </div>
+                    <img [src]="downloadURL | async" alt="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="save()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Edit Modal -->
@@ -29,41 +87,41 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="editModalLabel">Edit: __LIBRO___</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button id="closeEdit" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-          <div class="form-group">
-            <label for="titulo">Numero</label>
-            <input type="text" class="form-control" id="numero" aria-describedby="numeroHelper" placeholder="Numero">
-            <small id="numeroHelper" class="form-text text-muted">Numero.</small>
-          </div>
-          <div class="form-group">
-            <label for="titulo">Titulo</label>
-            <input type="text" class="form-control" id="titulo" aria-describedby="tituloHelper" placeholder="Ingresar titulo">
-            <small id="tituloHelper" class="form-text text-muted">Titulo del libro.</small>
-          </div>
-          <div class="form-group">
-            <label for="titulo">Fecha</label>
-            <input type="text" class="form-control" id="fecha" aria-describedby="fechaHelper" placeholder="Ingresar titulo">
-            <small id="fechaHelper" class="form-text text-muted">Fecha de salida.</small>
-          </div>
-          <div class="form-group">
-            <label for="titulo">Cantidad</label>
-            <input type="text" class="form-control" id="cantidad" aria-describedby="cantidadHelper" placeholder="Ingresar titulo">
-            <small id="cantidadHelper" class="form-text text-muted">Stock.</small>
-          </div>
-          <div class="form-group">
-            <label for="titulo">Precio</label>
-            <input type="text" class="form-control" id="precio" aria-describedby="precioHelper" placeholder="Ingresar titulo">
-            <small id="precioHelper" class="form-text text-muted">Precio del libro.</small>
-          </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="_numero">Numero</label>
+                <input [(ngModel)]="bookSelected.numero" type="text" class="form-control" id="_numero" aria-describedby="_numeroHelper" placeholder="Numero">
+                <small id="_numeroHelper" class="form-text text-muted">Numero.</small>
+            </div>
+            <div class="form-group">
+                <label for="_titulo">Titulo</label>
+                <input [(ngModel)]="bookSelected.titulo" type="text" class="form-control" id="_titulo" aria-describedby="_tituloHelper" placeholder="Ingresar titulo">
+                <small id="_tituloHelper" class="form-text text-muted">Titulo del libro.</small>
+            </div>
+            <div class="form-group">
+                <label for="_titulo">Fecha</label>
+                <input [(ngModel)]="bookSelected.fecha" type="text" class="form-control" id="_fecha" aria-describedby="_fechaHelper" placeholder="Ingresar la fecha">
+                <small id="_fechaHelper" class="form-text text-muted">Fecha de salida.</small>
+            </div>
+            <div class="form-group">
+                <label for="_titulo">Cantidad</label>
+                <input [(ngModel)]="bookSelected.cantidad" type="text" class="form-control" id="_cantidad" aria-describedby="_cantidadHelper" placeholder="Ingresar el stock">
+                <small id="_cantidadHelper" class="form-text text-muted">Stock.</small>
+            </div>
+            <div class="form-group">
+                <label for="_titulo">Precio</label>
+                <input [(ngModel)]="bookSelected.precio" type="text" class="form-control" id="_precio" aria-describedby="_precioHelper" placeholder="Ingresar el precio">
+                <small id="_precioHelper" class="form-text text-muted">Precio del libro.</small>
+            </div>
 
-      </div>
+        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-primary" (click)="update()">Editar</button>
       </div>
     </div>
   </div>
@@ -75,16 +133,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteModalLabel">Delete: title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button id="closeDelete" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ¿Esta seguro que desea eliminar __LIBRO___?
+        ¿Esta seguro que desea eliminar "{{bookSelected?.titulo}}"?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Eliminar</button>
+        <button type="button" class="btn btn-primary" (click)="delete()">Eliminar</button>
       </div>
     </div>
   </div>

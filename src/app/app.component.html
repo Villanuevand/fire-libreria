@@ -1,13 +1,22 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<nav class="navbar navbar-dark bg-primary flex-md-nowrap ">
+<ng-template #showLogin>
+    <nav class="navbar navbar-dark bg-primary flex-md-nowrap ">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Fire-Libreria 🔥📚</a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" (click)="login()">Login</a>
+            </li>
+        </ul>
+    </nav>
+</ng-template>
+<nav class="navbar navbar-dark bg-primary flex-md-nowrap" *ngIf="afAuth.user | async as user;">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Fire-Libreria 🔥📚</a>
-  <ul class="navbar-nav px-3">
+    <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Cerrar sesión</a>
+      <a class="nav-link" (click)="logout()" >Cerrar sesión</a>
     </li>
   </ul>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="afAuth.user | async as user; else showLogin">
   <div class="row">
     <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="height:calc(100vh)">
       <div class="sidebar-sticky">
@@ -21,15 +30,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" routerLink="/abm">
               <i class="material-icons">
                 library_books
               </i>
-              Libro
+              ABM Libros
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" routerLink="/listado">
               <i class="material-icons">
                 list
               </i>
