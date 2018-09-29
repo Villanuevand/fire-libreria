@@ -1,0 +1,16 @@
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-4" *ngFor="let book of books | async">
+        <div class="card" style="width: 18rem;" >
+            <img class="card-img-top" [src]="book.urlImg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{book.title}}</h5>
+                <p class="card-text">
+                    <span class="badge badge-primary">Stock: {{book.cantidad}}</span> <br/>
+                    <span class="badge badge-secondary">Fecha: {{book.fecha}}</span> <br/>
+                    <span class="badge badge-success">Precio: {{book.precio}}</span>
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>

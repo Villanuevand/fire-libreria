@@ -103,9 +103,7 @@ export class AbmComponent implements OnInit {
 
     uploadFile(event) {
         const file = event.target.files[0];
-        const filePath = 'img';
-        console.log(file);
-        console.log(filePath);
+        const filePath = 'img/' + file.name;
         const fileRef = this.storage.ref(filePath);
         const task = this.storage.upload(filePath, file);
         // observe percentage changes
